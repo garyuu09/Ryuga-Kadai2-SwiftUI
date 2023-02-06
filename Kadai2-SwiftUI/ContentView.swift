@@ -16,20 +16,9 @@ struct ContentView: View {
     var body: some View {
         VStack {
                    TextField("", text: $number1)
-                       .font(.title)
-                       .frame(height: 40)
-                       .frame(width: 200)
-                       .keyboardType(.numberPad)
-                       .textFieldStyle(RoundedBorderTextFieldStyle())
                    TextField("", text: $number2)
-            // text と valueの違いとは？
-                       .font(.title)
-                       .frame(height: 40)
-                       .frame(width: 200)
-                       .keyboardType(.numberPad)
-                       .textFieldStyle(RoundedBorderTextFieldStyle())
 
-                   Picker("", selection: $selectedIndex) {
+                   Picker("", selection: $selectedIndex){
                        Text("+")
                            .tag(0)
                        Text("-")
@@ -46,12 +35,13 @@ struct ContentView: View {
                     Button("Button") {
                         calResult = dispResult(equation: selectedIndex, number1: number1, number2: number2)
                     }
-
                    Text(String(calResult))
                        .font(.title)
-                   Spacer()
+                Spacer()
                }
+                .modifier(customTextFieldStyle())
                .padding()
+            Spacer()
            }
 }
 
@@ -75,6 +65,16 @@ func dispResult(equation: Int, number1: String, number2: String) -> String {
         }
     default:
         return ""
+    }
+}
+
+struct customTextFieldStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.title)
+            .frame(width: 200)
+            .keyboardType(.numberPad)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
     }
 }
 
